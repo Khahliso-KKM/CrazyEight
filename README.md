@@ -1,0 +1,2 @@
+# CrazyEight
+Game of cards
