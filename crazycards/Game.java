@@ -11,6 +11,8 @@ public class Game {
     private static String playername;
     private static int playerid;
     private static ArrayList<Integer> existingIDs = new ArrayList<>();
+    public static String table;
+
     private static Help help = new Help();
     private static final Cards cards = new Cards();
 
@@ -18,15 +20,39 @@ public class Game {
     public static void main(String[] args) {
         playername = getPlayerName();
         playerid = generateID();
-        Person person = new Person(playername, playerid);
+        table = cards.getTable();
+        Person person = new Person(playername, playerid, cards.getMainCards());
+        Computer computer = new Computer("HP-K", cards.getMainCards());
 
         if (needHelp(playername)){
             help.howToPlay();
         }
 
-        System.out.println("Cards shuffling... \n...\n...");
+        System.out.println("Cards shuffling... \n...\n...\n");
+        System.out.println("The table is: " + table);
 
-//        cards
+        ArrayList<String> sixCards = cards.generatePlayerCards();
+        //assign cards to player
+        person.setCards(sixCards);
+        ArrayList<String> anotherSixCards = cards.generatePlayerCards();
+        //assign cards to computer
+        computer.setCards(anotherSixCards);
+
+        System.out.println("Your cards are: \n" + person.getPlayerCards());
+
+        System.out.println("Choosing who to play first\n...\n...\n...");
+
+//        System.out.println(computer.getComputerCards());
+//        System.out.println(cards.getCards().size());
+
+        String playingCard = person.play(table);
+        if(cards.cardPlayed(playingCard)){
+            person.removeCard(playingCard);
+            System.out.println("You played, current table is: " + cards.getTable());
+        }
+
+
+
 
 
 
